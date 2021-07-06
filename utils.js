@@ -1,3 +1,7 @@
+const Quiz = require("./models/quiz.model");
+const quizzesDB = require("./quizzesDB");
+
+// Express Middleware
 const catchError = async (next, callback) => {
   try {
     await callback();
@@ -6,8 +10,16 @@ const catchError = async (next, callback) => {
   }
 };
 
-module.exports = { catchError };
+const insertQuizzes = async () => {
+  try {
+    quizzesDB.forEach(async (quiz) => {
+      const newQuiz = new Quiz(quiz);
+      const savedQuiz = await newQuiz.save();
+      console.log(savedQuiz);
+    });
+  } catch (error) {
+    console.log("error while inserting quizzes. ", error);
+  }
+};
 
-/**
- * Express Middleware
- */
+module.exports = { catchError, insertQuizzes };
