@@ -1,11 +1,26 @@
-const express = require('express');
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv").config();
+const connectDB = require("./config/connectDB");
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello Express app!')
+connectDB();
+
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+app.use(cors());
+
+app.get("/", (req, res) => {
+  res.send("Hello Express app!");
 });
 
-app.listen(3000, () => {
-  console.log('server started');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("server started");
 });
