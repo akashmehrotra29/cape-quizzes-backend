@@ -4,7 +4,7 @@ const { catchError } = require("../utils");
 const getAllQuizzes = async (req, res, next) => {
   catchError(next, async () => {
     const quizzes = await Quiz.find();
-    return res.json({ success: true, quiz: quizzes });
+    return res.json({ success: true, quizzes });
   });
 };
 

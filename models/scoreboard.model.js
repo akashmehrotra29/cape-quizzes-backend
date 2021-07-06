@@ -1,6 +1,13 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const resultArraySchema = new Schema({
+  id: { type: Schema.Types.ObjectId },
+  hasTaken: { type: Boolean },
+  selectedOption: { type: Schema.Types.ObjectId },
+  correctOpton: { type: Schema.Types.ObjectId },
+});
+
 const scoreboardSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
@@ -16,6 +23,7 @@ const scoreboardSchema = new Schema({
   score: {
     type: Number,
   },
+  resultArray: [resultArraySchema],
 });
 
 module.exports = mongoose.model("Scoreboard", scoreboardSchema);
