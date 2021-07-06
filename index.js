@@ -4,7 +4,6 @@ const dotenv = require("dotenv").config();
 const connectDB = require("./config/connectDB");
 
 const app = express();
-
 connectDB();
 
 app.use(express.json());
@@ -15,9 +14,15 @@ app.use(
 );
 app.use(cors());
 
+const errorHandler = require("./middlewares/errorHandler.middleware");
+const invalidRouteHandler = require("./middlewares/invalidRouteHandler.middleware");
+
 app.get("/", (req, res) => {
   res.send("Hello Express app!");
 });
+
+app.use(invalidRouteHandler);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 
