@@ -20,14 +20,16 @@ app.use(cors());
 const errorHandler = require("./middlewares/errorHandler.middleware");
 const invalidRouteHandler = require("./middlewares/invalidRouteHandler.middleware");
 const quizRoutes = require("./routes/quiz.route");
+const userRoutes = require("./routes/user.route");
 
 app.use("/", quizRoutes);
+app.use("/", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to cape quizzes!");
 });
 
-// must be placed after all routes
+//error handlers must be placed after all routes
 app.use(invalidRouteHandler);
 app.use(errorHandler);
 
