@@ -19,13 +19,16 @@ app.use(cors());
 
 const errorHandler = require("./middlewares/errorHandler.middleware");
 const invalidRouteHandler = require("./middlewares/invalidRouteHandler.middleware");
+const authHandler = require("./middlewares/authHandler.middleware");
 const quizRoutes = require("./routes/quiz.route");
 const userRoutes = require("./routes/user.route");
 const scoreboardRoutes = require("./routes/scoreboard.route");
+const leaderboardRoutes = require("./routes/leaderboard.route");
 
 app.use("/", quizRoutes);
 app.use("/", userRoutes);
-app.use("/scoreboard", scoreboardRoutes);
+app.use("/scoreboard", authHandler, scoreboardRoutes);
+app.use("/leaderboard", leaderboardRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to cape quizzes!");

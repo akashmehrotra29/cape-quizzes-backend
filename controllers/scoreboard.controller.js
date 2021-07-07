@@ -17,8 +17,8 @@ const updateScoreboard = async (req, res) => {
       );
     } else {
       const newScore = new Scoreboard({
-        quizId,
         userId,
+        quizId,
         numberOfAttempts: 1,
         score,
         resultArray: resultArray,
