@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const resultArraySchema = new Schema({
   id: { type: Schema.Types.ObjectId },
   hasTaken: { type: Boolean },
-  selectedOption: { type: Schema.Types.ObjectId },
+  selectedOption: { type: Schema.Types.ObjectId | String },
   correctOpton: { type: Schema.Types.ObjectId },
 });
 

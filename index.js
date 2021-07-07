@@ -21,9 +21,11 @@ const errorHandler = require("./middlewares/errorHandler.middleware");
 const invalidRouteHandler = require("./middlewares/invalidRouteHandler.middleware");
 const quizRoutes = require("./routes/quiz.route");
 const userRoutes = require("./routes/user.route");
+const scoreboardRoutes = require("./routes/scoreboard.route");
 
 app.use("/", quizRoutes);
 app.use("/", userRoutes);
+app.use("/scoreboard", scoreboardRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to cape quizzes!");
