@@ -1,9 +1,10 @@
 const User = require("../models/user.model");
 var jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const catchError = require("../middlewares/catchError.middleware");
 
-const signup = async (req, res) => {
-  try {
+const signup = async (req, res, next) => {
+  catchError(next, async () => {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
       throw new Error("User Already exists wtih this email");
@@ -34,15 +35,12 @@ const signup = async (req, res) => {
       userId: newUser._id,
       firstName: newUser.firstName,
     });
-  } catch (error) {
-    console.error(error);
-    res.status(401).json({ success: false, error: error.message });
-  }
+  });
 };
 
-const login = async (req, res) => {
-  const { email, password } = req.body;
-  try {
+const login = async (req, res, next) => {
+  catchError(next, async () => {
+    const { email, password } = req.body;
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
       throw new Error("User does not exist. Sign up instead.");
@@ -50,7 +48,7 @@ const login = async (req, res) => {
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new Error("Password does not match");
+      throw new Error("Email and Password does not match");
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
@@ -66,10 +64,7 @@ const login = async (req, res) => {
       userId: user._id,
       firstName: user.firstName,
     });
-  } catch (error) {
-    console.log({ error });
-    return res.status(401).json({ success: false, error: error.message });
-  }
+  });
 };
 
 module.exports = {

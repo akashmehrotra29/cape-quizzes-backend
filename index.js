@@ -17,7 +17,7 @@ app.use(cors());
 
 // insertQuizzes();
 
-const errorHandler = require("./middlewares/errorHandler.middleware");
+const serverErrorHandler = require("./middlewares/serverErrorHandler.middleware");
 const invalidRouteHandler = require("./middlewares/invalidRouteHandler.middleware");
 const authHandler = require("./middlewares/authHandler.middleware");
 const quizRoutes = require("./routes/quiz.route");
@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 
 //error handlers must be placed after all routes
 app.use(invalidRouteHandler);
-app.use(errorHandler);
+app.use(serverErrorHandler);
 
 const PORT = process.env.PORT || 3000;
 

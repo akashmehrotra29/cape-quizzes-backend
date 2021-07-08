@@ -1,5 +1,5 @@
 const Quiz = require("../models/quiz.model");
-const { catchError } = require("../utils");
+const catchError = require("../middlewares/catchError.middleware");
 
 const getAllQuizzes = async (req, res, next) => {
   catchError(next, async () => {

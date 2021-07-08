@@ -1,10 +1,11 @@
 const Scoreboard = require("../models/scoreboard.model");
+const catchError = require("../middlewares/catchError.middleware");
 
-const updateScoreboard = async (req, res) => {
-  const { quizId, score, resultArray } = req.body;
-  const { userId } = req;
+const updateScoreboard = async (req, res, next) => {
+  catchError(next, async () => {
+    const { quizId, score, resultArray } = req.body;
+    const { userId } = req;
 
-  try {
     const findQuiz = await Scoreboard.findOne({ userId, quizId });
     if (findQuiz) {
       await Scoreboard.findOneAndUpdate(
@@ -29,24 +30,18 @@ const updateScoreboard = async (req, res) => {
       path: "quizId",
     });
     res.json({ success: true, attemptedQuizDetails });
-  } catch (error) {
-    console.error({ error });
-    res.status(401).json({ success: false, error: error.message });
-  }
+  });
 };
 
-const attemptedQuizzesOfUser = async (req, res) => {
-  const { userId } = req;
+const attemptedQuizzesOfUser = async (req, res, next) => {
+  catchError(next, async () => {
+    const { userId } = req;
 
-  try {
     const attemptedQuizDetails = await Scoreboard.find({ userId }).populate({
       path: "quizId",
     });
     res.json({ success: true, attemptedQuizDetails });
-  } catch (error) {
-    console.error({ error });
-    res.status(401).json({ success: false, error: error.message });
-  }
+  });
 };
 
 module.exports = { updateScoreboard, attemptedQuizzesOfUser };
